@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductListView: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var cartViewModel: CartViewModel
+    @EnvironmentObject var favoritesViewModel: FavoritesViewModel
     @State private var searchText = ""
 
     var body: some View {

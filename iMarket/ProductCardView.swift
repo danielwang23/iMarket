@@ -11,6 +11,8 @@ struct ProductCardView: View {
     let product: Product
     @EnvironmentObject var cartViewModel: CartViewModel // Cart model to manage cart items
     @EnvironmentObject var productViewModel: ProductViewModel // Product model to manage product list
+    @EnvironmentObject var favoritesViewModel: FavoritesViewModel // View model to manage favorites
+    @State private var isFavorited = false // Track the heart button state
 
     var body: some View {
         HStack(alignment: .top) {
@@ -58,10 +60,27 @@ struct ProductCardView: View {
                             .foregroundColor(.white)
                             .cornerRadius(20)
                     }
+                    // Heart button for favorite
+                    Button(action: {
+                        isFavorited.toggle()
+                        if isFavorited {
+                            favoritesViewModel.addToFavorites(product: product)
+                        } else {
+                            favoritesViewModel.removeFromFavorites(product: product)
+                        }
+                    }) {
+                        Image(systemName: isFavorited ? "heart.fill" : "heart")
+                            .foregroundColor(isFavorited ? .red : .gray) // Red when favorited, gray otherwise
+                            .padding()
+                    }
                 }
             }
         }
         .padding(.vertical, 10) // Padding for the product card
+        .onAppear {
+            // Set initial favorite state
+            isFavorited = favoritesViewModel.isFavorited(product: product)
+        }
     }
 }
 
@@ -74,5 +93,6 @@ struct ProductCardView: View {
         ProductCardView(product: sampleProduct)
             .environmentObject(CartViewModel())
             .environmentObject(ProductViewModel())
+            .environmentObject(FavoritesViewModel())
     }
 }
