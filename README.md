@@ -1,1 +1,1 @@
-Fully functinoal model app for shopping and adding items to cart.
+#Fully functinoal model app for shopping, saving, and adding items to shoppingcart.
