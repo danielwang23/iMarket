@@ -24,11 +24,12 @@ struct ProductCardView: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 100)
                     .cornerRadius(10)
             } placeholder: {
                 ProgressView() // Temp. img placeholder spinner if pic doesn't load
+                    
             }
+            .frame(width: 100, height: 100)
 
             VStack(alignment: .leading, spacing: 8) {
                 
