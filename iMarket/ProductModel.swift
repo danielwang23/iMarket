@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Product struct
+// Product struct (Want it to be accessed and used elsewhere so I didn't put it in the PVModel)
 struct Product: Codable, Identifiable {
     let id: Int
     let title: String
@@ -16,17 +16,20 @@ struct Product: Codable, Identifiable {
     let thumbnail: String
 }
 
-// Response struct for API
+// Response struct for API to create array of product objects
 struct ProductResponse: Codable {
     let products: [Product]
 }
 
-// ViewModel class to fetch data from API
+// ViewModel class to fetch data from API and OO updates and refresh swiftUI views automatically
 class ProductViewModel: ObservableObject {
+    //published property so data will update itself
+    // API will fill empty product array
     @Published var products = [Product]()
     
     func fetchProducts() {
         
+        //--Mock Data--
         //        let mockProducts = [
         //                    Product(id: 1, title: "Sample Product 1", price: 10.99, category: "Category 1", thumbnail: "https://via.placeholder.com/150"),
         //                    Product(id: 2, title: "Sample Product 2", price: 12.99, category: "Category 2", thumbnail: "https://via.placeholder.com/150"),
@@ -45,15 +48,17 @@ class ProductViewModel: ObservableObject {
         URLSession.shared.dataTask(with: url) { data, response, error in
                    if let data = data {
                        let decoder = JSONDecoder()
+                       // Decodes the raw JSON data into the ProductResponse struct
                        if let productList = try? decoder.decode(ProductResponse.self, from: data) {
                            DispatchQueue.main.async {
                                self.products = productList.products
                            }
                        }
                    }
-               }.resume()
+               }.resume() //starts the requests
     }
     
+    // To be called in ProductCardView to remove product from product list
     func removeFromProductList(product: Product) {
         if let index = products.firstIndex(where: { $0.id == product.id }) {
             products.remove(at: index)

@@ -8,7 +8,9 @@
 import SwiftUI
 
 class CartViewModel: ObservableObject {
-    @Published var cartItems: [Product] = [] // Array to store the cart items
+    // ObsOBj allows to be observed by other views
+    // Published allows views that observe this array to store the cart items will update automatically/
+    @Published var cartItems: [Product] = []
 
     // Function to add a product to the cart
     func addToCart(product: Product) {

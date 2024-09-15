@@ -7,8 +7,9 @@
 
 import SwiftUI
 
+// Instantiated as Observable object to update and refresh UI automatically when changed
 class FavoritesViewModel: ObservableObject {
-    @Published var favoriteItems: [Product] = [] // Array to store favorited items
+    @Published var favoriteItems: [Product] = [] // Array to store favorited items, updates automatically
        
     // Function to add a product to favorites
     func addToFavorites(product: Product) {
@@ -24,7 +25,7 @@ class FavoritesViewModel: ObservableObject {
         }
     }
 
-    // Check if a product is favorited
+    // Check if a product is favorited. Function used in the OnAppear part of the ProductCardView file.
     func isFavorited(product: Product) -> Bool {
         return favoriteItems.contains(where: { $0.id == product.id })
     }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyItemsView: View {
+    // EnvObj is a shared instance of FavoritesViewModel
     @EnvironmentObject var favoritesViewModel: FavoritesViewModel
 
     var body: some View {

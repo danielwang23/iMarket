@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    // State Object to manage and create the lifecycle of the CartViewModel and ProductViewModel
+    // Can then be passed into EnvObj as shown below in lines 41-44
     @StateObject var cartViewModel = CartViewModel()
     @StateObject var productViewModel = ProductViewModel()
 
@@ -22,20 +24,21 @@ struct ContentView: View {
                     Text("Products")
                 }
             
-            MyItemsView() // Placeholder for "My Items" tab
+            MyItemsView() // "My Items" tab
                 .tabItem {
                     Image(systemName: "heart.fill")
                     Text("My Items")
                 }
                 
             
-            CartView() // Placeholder for "Cart" tab
+            CartView() // "Cart" tab
                 .tabItem {
                     Image(systemName: "cart.fill")
                     Text("Cart")
                 }
                 
         }
+        // Child views can now access viewmodels without recreating them.
         .environmentObject(cartViewModel)
         .environmentObject(favoritesViewModel)
         .environmentObject(productViewModel)
