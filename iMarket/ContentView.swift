@@ -9,19 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var cartViewModel = CartViewModel()
+    @StateObject var productViewModel = ProductViewModel()
+
     var body: some View {
         let favoritesViewModel = FavoritesViewModel()
-        let productViewModel = ProductViewModel() // Create product view model
         
         TabView {
-            ProductListView(
-                onAddToCart: { product in
-                        cartViewModel.addToCart(product: product)
-                        productViewModel.removeFromProductList(product: product)
-                    }
-            ) // Product List View for the "Products" tab
+           // Product List View for the "Products" tab
+           ProductListView()
                 .tabItem {
-                    Image(systemName: "carrot.fill") // Replace with carrot icon, you can use SFSymbols or custom icon
+                    Image(systemName: "carrot.fill")
                     Text("Products")
                 }
             
@@ -41,8 +38,8 @@ struct ContentView: View {
         }
         .environmentObject(cartViewModel)
         .environmentObject(favoritesViewModel)
-        .environmentObject(ProductViewModel())
-        .accentColor(.blue) // Customize this color to suit your design
+        .environmentObject(productViewModel)
+        .accentColor(.blue)
     }
 }
 
