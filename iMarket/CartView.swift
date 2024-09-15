@@ -8,26 +8,38 @@
 import SwiftUI
 
 struct CartView: View {
-    @State private var cartItems = [Product]()
+    @EnvironmentObject var cartViewModel: CartViewModel // [NEW] Use CartViewModel to manage cart items
 
     var body: some View {
         VStack {
-            List {
-                ForEach(cartItems) { item in
-                    HStack {
-                        Text(item.title)
-                        Spacer()
-                        Text("$\(item.price, specifier: "%.2f")")
+            if cartViewModel.cartItems.isEmpty {
+                // [NEW] Display message if cart is empty
+                Text("Your cart is empty.")
+                    .font(.headline)
+                    .padding()
+            } else {
+                // List the cart items
+                List {
+                    ForEach(cartViewModel.cartItems) { item in
+                        HStack {
+                            Text(item.title)
+                            Spacer()
+                            Text("$\(item.price, specifier: "%.2f")")
+                        }
                     }
                 }
+                .navigationTitle("Cart")
+
+                // Display the total price
+                Text("Total: $\(cartViewModel.cartItems.reduce(0) { $0 + $1.price }, specifier: "%.2f")")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding()
             }
-            .navigationTitle("Cart")
-            Text("Total: $\(cartItems.reduce(0) { $0 + $1.price }, specifier: "%.2f")")
-                .padding()
         }
     }
 }
 
 #Preview {
-    CartView()
+    CartView().environmentObject(CartViewModel()) //
 }
