@@ -22,10 +22,28 @@ struct CartView: View {
                 List {
                     ForEach(cartViewModel.cartItems) { item in
                         HStack {
+                            AsyncImage(url: URL(string: item.thumbnail)) { image in image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50) // Set size for the image
+                                    .cornerRadius(10)
+                            } placeholder: {
+                                ProgressView() // Placeholder while the image loads
+                            }
+                            
                             Text(item.title)
+                                .font(.headline)
+                                .lineLimit(1) // Limit title to one line
+                            
                             Spacer()
+                        
+                            // Bold and increase font size for the price
                             Text("$\(item.price, specifier: "%.2f")")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(.primary)
+                        
                         }
+                        .padding(.vertical, 5) // Add padding around each cart item
                     }
                 }
                 .navigationTitle("Cart")
@@ -41,5 +59,5 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView().environmentObject(CartViewModel()) //
+    CartView().environmentObject(CartViewModel())
 }
