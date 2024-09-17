@@ -2,4 +2,4 @@
 
 Fully functional model app for shopping, saving, and adding items to shoppingcart. Data was pulled from a dummy products API.
 
-![IMarket Functionality Gif](iMarketApp_Functionality.gif)
+![IMarket Functionality Gif](iMarketAppFunctionality.gif)
